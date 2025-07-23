@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // import { EthereumModal } from "./EthereumModal";
 // import { useAccount } from "wagmi";
 // import { useWeb3Modal } from "@web3modal/wagmi/react";
 import walletIcon from "../images/Wallet.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { StakeSettingModal } from "./StakeSettingModal";
+import { stakeWithAlert } from "../utils/Contract";
+import { MyContext } from "../landingcomponents/MyContext";
 
 export const Tabcontrol = () => {
   const [activeBtn, setActiveBtn] = useState("right");
   const [isconnect, SetIsconnect] = useState(false);
   const [modalShow, setModalShow] = useState(false); // Add modal state
+  const { setAlert } = useContext(MyContext);
   // const { address, isConnecting, isDisconnected } = useAccount();
-  // const { open } = useWeb3Modal();
+
+  // TODO: Replace this with the actual user's address from wallet connection
+  const address = undefined;
 
   // useEffect(() => {
   //   (async () => {
@@ -118,6 +123,16 @@ export const Tabcontrol = () => {
         stakeType={"stake"}
         stakeValue={0}
         defaultDay={30}
+        onStake={async () => {
+          // TODO: Replace address with actual user address
+          await stakeWithAlert({
+            mode: 1, // 1 for 30 days
+            price: 0, // 0 for now
+            address,
+            setAlert,
+            onClose: () => setModalShow(false),
+          });
+        }}
       />
       {/* {isconnect === true ? (
         <EthereumModal />
