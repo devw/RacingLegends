@@ -4,10 +4,12 @@ import React, { useState, useEffect } from "react";
 // import { useWeb3Modal } from "@web3modal/wagmi/react";
 import walletIcon from "../images/Wallet.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { StakeSettingModal } from "./StakeSettingModal";
 
 export const Tabcontrol = () => {
   const [activeBtn, setActiveBtn] = useState("right");
   const [isconnect, SetIsconnect] = useState(false);
+  const [modalShow, setModalShow] = useState(false); // Add modal state
   // const { address, isConnecting, isDisconnected } = useAccount();
   // const { open } = useWeb3Modal();
 
@@ -61,6 +63,7 @@ export const Tabcontrol = () => {
                     }
                   : { background: "none", color: "#BABABA", borderLeft: "none" }
               }
+              onClick={() => setModalShow(true)} // Open modal
             >
               STAKING
             </button>
@@ -109,7 +112,13 @@ export const Tabcontrol = () => {
           </div>
         )} */}
       </div>
-
+      <StakeSettingModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        stakeType={"stake"}
+        stakeValue={0}
+        defaultDay={30}
+      />
       {/* {isconnect === true ? (
         <EthereumModal />
       ) : (
