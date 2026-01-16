@@ -471,3 +471,10 @@ export const nftClaimRewards = async (address) => {
     };
   }
 };
+
+// Utility function to handle staking with alert and optional modal close
+export const stakeWithAlert = async ({ mode, price, address, setAlert, onClose }) => {
+  const ret = await stake(mode, price, address);
+  if (setAlert) setAlert(ret);
+  if (onClose) onClose();
+};
